@@ -29,7 +29,7 @@ public ModelAndView showDictionary(){
         if (result == null){
             result = "Không tìm thấy!!!";
         }
-        return new ModelAndView("/index","result",result);
+        return new ModelAndView("/index","result", result);
     }
 
 }
