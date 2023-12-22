@@ -17,11 +17,18 @@ public class ProductHandle {
 
     @Autowired
     public IProductService productService;
+    @ModelAttribute("product")
+    public Product product(){
+        return new Product();
+    }
 
     @RequestMapping
     public ModelAndView listProduct(){
         List<Product> list = productService.findAll();
-        return new ModelAndView("/home","list",list);
+        ModelAndView modelAndView = new ModelAndView("/home");
+        modelAndView.addObject("list",list);
+//        modelAndView.addObject("product",new Product());
+        return modelAndView;
     }
     @PostMapping("/delete")
     public String handleDelete(@RequestParam("id") int id){
@@ -30,12 +37,9 @@ public class ProductHandle {
     }
 
     @GetMapping("/addProduct")
-    public String handleAddProduct(@RequestParam("id") int id, @RequestParam("name") String name,
-                                   @RequestParam("price") double price,
-                                   @RequestParam("description") String description,
-                                   @RequestParam("producer") String producer, RedirectAttributes redirectAttributes){
-        Product product = new Product(id,name,price,description,producer);
-
+    public String handleAddProduct( Product product, RedirectAttributes redirectAttributes){
+//        Product product = new Product(id,name,price,description,producer);
+        System.out.println(product);
         if (productService.save(product)){
             redirectAttributes.addFlashAttribute("message", "Product Add successfully!");
         } else {
