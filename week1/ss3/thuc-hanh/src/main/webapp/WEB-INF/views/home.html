@@ -177,7 +177,7 @@
                     <h1 style="color: white" class="modal-title fs-5" id="exampleModalLabel">Xác nhận xóa</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <input type="hidden" name="id" id="id">
+                <input type="hidden" name="id" id="idDelete">
                 <div class="modal-body">
                     Bạn có muốn xóa  sản phẩm  "<span style="color:black " id="title"></span>" hay không?
                 </div>
@@ -195,7 +195,7 @@
     function send(button){
         var id = button.getAttribute("data-item-id");
         var title = button.getAttribute("data-item-name");
-        document.getElementById("id").value = id;
+        document.getElementById("idDelete").value = id;
         document.getElementById("title").innerText = title;
         console.log(id +"" + title)
     }
