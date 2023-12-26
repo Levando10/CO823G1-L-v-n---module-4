@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
+
 public class ProductRepository implements IProductRepository {
 
     @PersistenceContext

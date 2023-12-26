@@ -12,9 +12,12 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+
+
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.example.data")
+
 public class AppConfig implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
@@ -28,7 +31,7 @@ public class AppConfig implements ApplicationContextAware {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/student");
+        templateResolver.setPrefix("/WEB-INF/product");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
