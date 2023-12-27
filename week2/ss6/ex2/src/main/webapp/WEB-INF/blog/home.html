@@ -11,8 +11,21 @@
 </head>
 <body>
 
-<h3 class="text-center"> Danh sách tóm tắt các blog</h3>
+<h3 class="text-center"> Danh sách các blog</h3>
+<!--create-->
 <button class=" btn-primary" data-bs-toggle="modal"  data-bs-target="#createBlog">Tạo blog</button>
+
+<!--sort-->
+<a th:href="@{/sort}">Sort</a>
+
+
+<form th:action="@{searchByCategory}" method="post">
+    <select  th:name="cate">
+        <option th:each="itemC,status : ${cList}" th:value="${itemC.id}" th:text="${itemC.name}"></option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+
 <form style="margin-left: 76%" method="post" action="/search">
     <input name="name-search" type="text">
     <button type="submit">Tìm</button>
@@ -65,6 +78,12 @@
                                            class="form-control" name="context" th:value="${item.context}" >
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">Thể loại  </label>
+                                    <select  th:name="cate">
+                                        <option th:each="itemC,status : ${cList}" th:value="${itemC.id}" th:text="${itemC.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label">Người viết blog </label>
                                     <input type="text"  required
                                            class="form-control" name="author" th:value="${item.author}" >
@@ -74,6 +93,7 @@
                                     <input type="text"  required
                                            class="form-control" name="summary" th:value="${item.summary}" >
                                 </div>
+
 
                             </div>
                             <div class="modal-footer">
@@ -97,7 +117,7 @@
         </td>
 
         <td>
-            <a class="btn btn-secondary" th:href="@{{id}/detail(id=${item.id})}" >view</a>
+            <a class="btn btn-secondary" th:href="@{/detail(id=${item.id})}" >view</a>
         </td>
 
     </tr>
@@ -147,6 +167,12 @@
                         <label class="form-label">Người viết  </label>
                         <input type="text" th:field="*{author}" required
                                class="form-control" value="" >
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Thể loại  </label>
+                        <select  th:field="*{category}">
+                            <option th:each="itemC,status : ${cList}" th:value="${itemC.id}" th:text="${itemC.name}"></option>
+                        </select>
                     </div>
 
 

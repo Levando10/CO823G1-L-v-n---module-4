@@ -19,4 +19,8 @@ public interface IBlogService {
     Page<Blog> findAll(Pageable pageable);
 
     List<Blog> findByName(String name);
+
+    List<Blog> findByCategory(Integer id);
+
+    Page<Blog> findAllByOrderByLocalDateTime(Pageable pageable);
 }

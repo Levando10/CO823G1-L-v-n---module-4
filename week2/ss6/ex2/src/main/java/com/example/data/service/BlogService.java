@@ -41,6 +41,16 @@ public class BlogService implements IBlogService{
 
     @Override
     public List<Blog> findByName(String name) {
-        return iBlogRepository.findByName("%" + name + "%");
+        return iBlogRepository.findAllByName("%" + name + "%");
+    }
+
+    @Override
+    public List<Blog> findByCategory(Integer id) {
+        return iBlogRepository.findAllByCategory_Id(id);
+    }
+
+    @Override
+    public Page<Blog> findAllByOrderByLocalDateTime(Pageable pageable) {
+        return iBlogRepository.findAllByOrderByLocalDateTimeDesc(pageable);
     }
 }

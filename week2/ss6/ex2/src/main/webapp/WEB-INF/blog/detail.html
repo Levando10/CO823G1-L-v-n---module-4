@@ -12,18 +12,22 @@
 <a class="btn btn-primary" th:href="@{/}">Back List Product</a>
 <table class="table table-hover">
   <tr>
-    <th>Mã hàng hóa</th>
-    <th>Tên sản phẩm</th>
-    <th>Giá sản phẩm</th>
-    <th>Mô tả sản phẩm</th>
-    <th>Nhà sản xuất</th>
+    <th>Mã bolg</th>
+    <th>Tiêu đề blog</th>
+    <th>Thể loại</th>
+    <th>Nội dung blog</th>
+    <th>Tóm tắt blog</th>
+    <th>Người viết</th>
+    <th>Thời gian tạo</th>
   </tr>
   <tr>
     <td th:text="${blog.id}"></td>
     <td th:text="${blog.title}"></td>
+    <td th:text="${blog.category.name}"></td>
     <td th:text="${blog.context}"></td>
     <td th:text="${blog.summary}"></td>
     <td th:text="${blog.author}"></td>
+    <td th:text="${blog.localDateTime}"></td>
 
   </tr>
 </table>

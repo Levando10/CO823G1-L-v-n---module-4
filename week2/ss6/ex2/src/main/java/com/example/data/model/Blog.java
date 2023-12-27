@@ -1,6 +1,12 @@
 package com.example.data.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
+
+
 
 @Entity
 @Table(name = "blog")
@@ -12,6 +18,39 @@ public class Blog {
     private String context;
     private String summary;
     private String author;
+
+    private LocalDateTime localDateTime;
+    @ManyToOne
+    @JoinColumn(name = "c_id")
+   private Category category;
+
+    public Blog(Integer id, String title, String context, String summary, String author, Category category) {
+        this.id = id;
+        this.title = title;
+        this.context = context;
+        this.summary = summary;
+        this.author = author;
+        this.category = category;
+    }
+
+    public Blog(String title, String context, String summary, String author, LocalDateTime localDateTime, Category category) {
+        this.title = title;
+        this.context = context;
+        this.summary = summary;
+        this.author = author;
+        this.localDateTime = localDateTime;
+        this.category = category;
+    }
+
+    public Blog(String title, String context, String summary, String author, Category category) {
+        this.title = title;
+        this.context = context;
+        this.summary = summary;
+        this.author = author;
+        this.category = category;
+    }
+
+
 
     public Blog() {
     }
@@ -29,6 +68,22 @@ public class Blog {
         this.context = context;
         this.summary = summary;
         this.author = author;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     public Integer getId() {
