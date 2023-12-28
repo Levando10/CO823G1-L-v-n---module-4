@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns: lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{common-html :: bootstrapCss}"></th:block>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/blog/home">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-warning text-dark"
+                           th:href="@{/product/home(searchParam=${searchValue},sort='name,asc')}">Sort by name</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=""></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href=""></a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Name" name="searchParam"
+                           th:value="${searchValue}">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="p-5 text-center bg-image"
+         style="height: 200px;">
+        <div class="mask">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-success">
+                    <h1 class="mb-3">My Blog</h1>
+                    <a href="" th:href="@{/product/create}" class="btn btn-outline-success btn-lg" role="button">Create
+                        Blog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container mt-3">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>CN</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, loop : ${products}">
+            <td th:text="${loop.count}"></td>
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.category.name}"></td>
+            <td>
+                <a href="" th:href="@{/product/edit/{id}(id=${item.id})}" class="btn btn-outline-warning">Edit</a>
+            </td>
+            <td>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                        th:data-bs-target="'#staticBackdrop' + ${item.id}">
+                    Delete
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" th:id="staticBackdrop + ${item.id}" data-bs-backdrop="static"
+                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-danger" id="staticBackdropLabel">Warning!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Do you want delete blog <span th:text="${item.name}" class="text-danger"></span>
+                                with id = <span th:text="${item.id}" class="text-danger"></span> ?
+                            </div>
+                            <div class="modal-footer">
+                                <a href="" th:href="@{/product/delete/{id}(id=${item.id})}"
+                                   class="btn btn-outline-success">Delete</a>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <ul class="pagination" th:if="${products.totalPages > 0}">
+        <li class="page-item">
+            <a class="page-link" th:if="${products.hasPrevious()}"
+               th:href="@{'/product/home'(page=${products.number - 1}, searchParam=${searchValue}, sort='name,asc')}">
+                Previous
+            </a>
+        </li>
+        <div th:each="item, loop : ${#numbers.sequence(1, products.totalPages )}">
+            <div th:if="${(products.number + 1) == item}">
+                <li class="page-item active">
+                    <a class="page-link" href="#" th:text="${item}"
+                       th:href="@{/product/home(page=(${item}-1), searchParam=${searchValue}, sort='name,asc')}"></a>
+                </li>
+            </div>
+            <div th:unless="${((products.number + 1) == item)}">
+                <li class="page-item">
+                    <a class="page-link" href="#" th:text="${item}"
+                       th:href="@{/product/home(page=(${item}-1), searchParam=${searchValue}, sort='name,asc')}"></a>
+                </li>
+            </div>
+        </div>
+        <li class="page-item">
+            <a class="page-link" th:if="${products.hasNext()}"
+               th:href="@{'/product/home'(page=${products.number + 1}, searchParam=${searchValue}, sort='name,asc')}">
+                Next
+            </a>
+        </li>
+    </ul>
+</div>
+<th:block th:replace="~{common-html :: boostrapScript}"></th:block>
+</body>
+</html>

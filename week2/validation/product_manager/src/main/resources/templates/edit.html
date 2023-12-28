@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns: lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{common-html :: bootstrapCss}"></th:block>
+</head>
+<body>
+<div class="container">
+    <form action="/product/edit" method="post" th:object="${productDto}">
+        <div class="mb-3 mt-3">
+            <input type="hidden" class="form-control" id="id" placeholder="id" th:field="*{id}">
+        </div>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('id')}">
+            <div th:errors="*{id}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name" th:field="*{name}">
+        </div>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('name')}">
+            <div th:errors="*{name}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="price" class="form-label">Price:</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter price" th:field="*{price}">
+        </div>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('price')}">
+            <div th:errors="*{price}"></div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="sel1" class="form-label">Select list (select one):</label>
+            <select class="form-select" id="sel1" th:field="*{category}">
+                <div th:each="item,loop : ${categories}" >
+                    <option th:text="${item.name}" th:value="${item.id}" selected></option>
+                </div>
+            </select>
+        </div>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('category')}">
+            <div th:errors="*{category}"></div>
+        </div>
+        <button type="submit" class="btn btn-outline-success">Submit</button>
+        <a href="/product/home" class="btn btn-outline-secondary">Back home</a>
+    </form>
+</div>
+</div>
+<th:block th:replace="~{common-html :: boostrapScript}"></th:block>
+</body>
+</html>

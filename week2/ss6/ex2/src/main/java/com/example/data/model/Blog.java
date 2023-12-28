@@ -1,8 +1,10 @@
 package com.example.data.model;
 
-import org.hibernate.annotations.CreationTimestamp;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 
@@ -14,6 +16,8 @@ public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z]*",message = "just character")
     private String title;
     private String context;
     private String summary;
