@@ -4,7 +4,8 @@ import com.example.demo.model.Book;
 import com.example.demo.model.BookRenting;
 import com.example.demo.service.IBookRentingService;
 import com.example.demo.service.IBookService;
-import org.springframework.beans.BeanUtils;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -47,7 +47,11 @@ public class BookController {
     }
 
     @GetMapping("/renting/{id}")
-    public String  rentingHandle(@PathVariable("id") Integer id , Model model) {
+    public String  rentingHandle(@PathVariable("id") Integer id , Model model ,
+                                 @CookieValue(value = "counter",defaultValue = "0") Integer counter,
+                                 HttpServletResponse response
+
+    ) {
         Book book = iBookService.findById(id);
         Integer randomNumber;
         LocalDateTime startRenting;
@@ -62,6 +66,13 @@ public class BookController {
 
             book.setQuantity(book.getQuantity() - 1);
             iBookService.save(book);
+            counter++;
+            Cookie cookie = new Cookie("counter",counter.toString());
+            cookie.setMaxAge(30);
+            response.addCookie(cookie);
+            model.addAttribute("cookie",cookie);
+            System.out.println(counter);
+//            return "/home";
         } else {
             System.out.println("qua roi");
             model.addAttribute("book",book);
